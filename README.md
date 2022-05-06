@@ -24,4 +24,4 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 
 
 ### 注意
-犹豫接口问题，一次返回数据量较大，最好在wifi环境下运行
+由于接口问题，一次返回数据量较大，最好在wifi环境下运行
