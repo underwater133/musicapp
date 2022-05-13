@@ -47,6 +47,7 @@ import {useRouter} from 'vue-router'
 import store from '../store/index'
 import { Dialog } from 'vant';
 import md5 from 'js-md5'
+import {account} from '../../account'
 export default {
   name:'LoginView',
   setup(props) {
@@ -57,7 +58,7 @@ export default {
     async function onSubmit(values){
       let res
       if(values.手机号 === 'admin' && values.密码 === '123456'){
-        res = await loginByPhone("18127759539", md5("yy1335284742"))
+        res = await loginByPhone(account.phone, md5(account.password))
       }
       else res = await loginByPhone(values.手机号, md5(values.密码))
 
