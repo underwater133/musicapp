@@ -127,6 +127,7 @@ export default {
     
     const routes = useRoute()
     const router = useRouter()
+    let curCount = 0, reqCount = 15, offset = 0
     //获取歌单列表
     async function getTracks(){
       if(props.msg == "最近播放"){
@@ -166,9 +167,8 @@ export default {
           finished.value = true;
         })
       }
-      else{
-        
-        getAllTracks(routes.query.id).then(res=>{
+      else{  //根据歌单id进来的
+        getAllTracks(routes.query.id, reqCount, offset).then(res=>{
           playList.data.tracks.push(...res.data.songs)
           playList.data.length = res.data.songs.length
           for(let item of playList.data.tracks){
@@ -178,9 +178,18 @@ export default {
             }
             item.arts = name.substring(0,name.length-1)
           }
-         
+          curCount += reqCount
+          if(curCount + reqCount >= props.trackCount){
+            reqCount = props.trackCount - curCount
+          }
+          
+          offset++
+          
+          console.log(res)
           loading.value = false;
-          finished.value = true;
+          if(curCount >= props.trackCount){
+            finished.value = true;
+          }
           
         }).catch(err=>{
           Dialog.alert({
@@ -210,8 +219,6 @@ export default {
     async function onLoad(){
       getTracks()
     }
-
-
 
 
     // 播放音乐

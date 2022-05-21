@@ -70,8 +70,8 @@ export function getPlayListDetail(id){
 //获取歌单所有歌曲
 // 可选参数 : limit : 限制获取歌曲的数量，默认值为当前歌单的歌曲数量
 // 可选参数 : offset : 默认值为0
-export function getAllTracks(id){
-  return axios.get(url + `/playlist/track/all?id=${id}&cookie=` + localStorage.cookie)
+export function getAllTracks(id, limit = 10, offset = 0){
+  return axios.get(url + `/playlist/track/all?id=${id}&limit=${limit}&offset=${offset}&cookie=` + localStorage.cookie)
 }
 
 // 获取歌词
