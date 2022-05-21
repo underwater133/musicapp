@@ -7,7 +7,7 @@
         播放全部  
       </span> -->
     </div>
-    <van-skeleton v-if="show" :row="5" round style="margin:0.4rem 0;" />
+    <highQtSongsSkeleton v-if="show" />
     <div v-else class="recSwiper">
       <van-swipe class="my-swipe" :show-indicators="false" :loop="false" lazy-render :width="reaWidth" resize>
         <musicSwiperItem :showList="recList.huayuList.slice(0,3)" :isShowPlayIcon="true"/>
@@ -22,9 +22,10 @@
 import {reactive, onMounted,ref} from 'vue'
 import {getHighQuality,getAlbumMusic} from '../api/index'
 import musicSwiperItem from './common/musicSwiperItem.vue'
+import highQtSongsSkeleton from '../skeleton/highQtSongs-skeleton.vue'
 export default {
   name:'highQualitySongsRec',
-  components:{musicSwiperItem},
+  components:{musicSwiperItem, highQtSongsSkeleton},
   setup(){
     let album = reactive({
       huayu:[],
@@ -55,13 +56,15 @@ export default {
       }
     }
     onMounted(async ()=>{
-      await getHighQuality(3, '华语').then(res=>{
+      await getHighQuality(5, '华语').then(res=>{
+        
         album.huayu.push(...res.data.playlists)
+        
       })
 
-      await getHighQuality(3, '欧美').then(res=>{
-        album.oumei.push(...res.data.playlists)
-      })
+      // await getHighQuality(2, '欧美').then(res=>{
+      //   album.oumei.push(...res.data.playlists)
+      // })
 
       await init()
       show.value = false

@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import {computed, reactive, ref, watch} from 'vue'
+import {computed, reactive, ref} from 'vue'
 import {useRoute,useRouter} from 'vue-router'
 import {getLatestPlayList,getAllTracks,getMusicUrl,getUserPlayList,
           delFromMyPlayList,subscribePlaylist,getDailyRecSongs} from '../api/index'
@@ -182,10 +182,7 @@ export default {
           if(curCount + reqCount >= props.trackCount){
             reqCount = props.trackCount - curCount
           }
-          
           offset++
-          
-          console.log(res)
           loading.value = false;
           if(curCount >= props.trackCount){
             finished.value = true;
