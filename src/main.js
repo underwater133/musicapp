@@ -8,8 +8,25 @@ import {Swipe, SwipeItem , Tab, Tabs, Progress, Form, Field,
   CellGroup,Dialog, List, Popup, Toast, SwipeCell, Button, Cell, Lazyload,
   Overlay,Skeleton, PullRefresh, Badge} from 'vant'
 
-createApp(App)
-  .use(store)
+import { useIntersectionObserver } from '@vueuse/core'
+const app = createApp(App)
+
+app.directive('img-lazy', {
+  mounted(el, binding){
+    const { stop } = useIntersectionObserver(
+      el,
+      ([{ isIntersecting }], observerElement) => {
+        if(isIntersecting){
+          el.src = binding.value
+          //加载完图片之后停止监听
+          stop()
+        }
+      },
+    )
+  }
+})
+
+app.use(store)
   .use(router)
   .use(Swipe)
   .use(SwipeItem)
@@ -39,4 +56,5 @@ createApp(App)
   .use(Skeleton)
   .use(PullRefresh)
   .use(Badge)
-  .mount('#app')
+
+app.mount('#app')

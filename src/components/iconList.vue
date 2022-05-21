@@ -1,7 +1,7 @@
 <template>
   <div class="iconList">
     <div v-for="(item, index) in iconList" :key="index" class="itemicon" @click="toDailyRecSong(index)">
-      <img v-lazy="item.iconUrl" preload="1" alt="">
+      <img v-img-lazy="item.iconUrl" preload="1" alt="">
       <span v-if="iconList[0].name">{{item.name}}</span>
       <van-skeleton v-else :row="1" />
     </div>

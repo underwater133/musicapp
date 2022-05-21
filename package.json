@@ -7,13 +7,14 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@vueuse/core": "^8.5.0",
     "axios": "^0.26.0",
     "core-js": "^3.8.3",
     "file-saver": "^2.0.5",
     "js-md5": "^0.7.3",
     "swiper": "^5.4.5",
     "vant": "^3.4.3",
-    "vue": "^3.2.13",
+    "vue": "^3.2.33",
     "vue-awesome-swiper": "^4.1.1",
     "vue-content-loader": "^2.0.1",
     "vue-marquee-text-component": "^2.0.1",

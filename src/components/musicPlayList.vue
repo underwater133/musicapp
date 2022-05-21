@@ -38,7 +38,7 @@
       <van-swipe-cell v-for="(item, index) in playList.data.tracks" :key="index" >
         <div class="show" @click="playMusic(index)">
           <div class="left">
-            <img v-if="msg=='每日推荐'" :src="item.al.picUrl" alt="" style="width:0.7rem;height:0.7rem;border-radius:5px;">
+            <img v-if="msg=='每日推荐'" v-img-lazy="item.al.picUrl" alt="" style="width:0.7rem;height:0.7rem;border-radius:5px;">
             <svg v-else-if="playingInList && playindex==index" style="width:0.38rem; height:0.38rem;" t="1647768647858" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2741" width="48" height="48"><path d="M499.353613 1023.998976a76.287924 76.287924 0 0 1-76.083124-76.083124V76.083124A76.287924 76.287924 0 0 1 499.353613 0 76.287924 76.287924 0 0 1 575.487937 76.083124v871.935128A76.287924 76.287924 0 0 1 499.353613 1023.998976z m346.521253 0a76.287924 76.287924 0 0 1-76.083124-76.083124v-340.889259a76.287924 76.287924 0 0 1 76.083124-76.083124 76.287924 76.287924 0 0 1 76.083124 76.083124v340.991659A76.287924 76.287924 0 0 1 845.874866 1023.998976zM152.883559 1023.998976A76.287924 76.287924 0 0 1 76.800435 947.915852V415.333985a76.287924 76.287924 0 0 1 76.083124-76.083124 76.287924 76.287924 0 0 1 76.083124 76.083124v532.684267A76.339124 76.339124 0 0 1 152.883559 1023.998976z" fill="#d41d05" p-id="2742"></path></svg>
             <span v-else class="index">{{index+1}}</span>
             <div class="detail">
@@ -73,7 +73,7 @@
     >
       <div v-show="showlevel == 0">
         <div class="songInfo">
-          <img :src="playList.data.tracks[currentIndex].al.picUrl" alt="">
+          <img v-img-lazy="playList.data.tracks[currentIndex].al.picUrl" alt="">
           <div class="text">
             <span class="name">{{playList.data.tracks[currentIndex].name}}</span>
             <span class="arts">{{playList.data.tracks[currentIndex].arts}}</span>

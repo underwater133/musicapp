@@ -16,7 +16,7 @@
       </template>
     </Suspense>
 
-    <!-- 发现好歌单 -->
+    <!-- 推荐歌单 -->
     <Suspense>
       <musicList />
       <template #fallback>

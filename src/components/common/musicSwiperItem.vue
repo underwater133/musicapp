@@ -2,7 +2,7 @@
   <van-swipe-item class="swipeItem">
     <div v-for="(item, index) in showList" :key="item.id" class="music" @click="playMusic(index)">
       <div class="pic">
-        <img v-lazy="item.al.picUrl" preload="1" alt="">
+        <img v-img-lazy="item.al.picUrl" preload="1" alt="">
       </div>
       <div class="info">
         <span>{{ item.name }}</span>
