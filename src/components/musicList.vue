@@ -10,7 +10,9 @@
           name: 'musicList',
           query: { id: item.id }
         }">
-          <img v-img-lazy="item.picUrl" preload="1" alt="">
+          <div class="zhanwei">
+            <img v-img-lazy="item.picUrl" preload="1" alt="">
+          </div>
           <span class="title">{{ item.name }}</span>
           <div class="playCount">
             <svg t="1646804763613" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +31,7 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted, onActivated } from 'vue'
+import { ref, reactive, onActivated } from 'vue'
 import { getMusicList, dayRecMuiscList } from '../api/index'
 import { formatCount } from '../util/formatPlayCount'
 import store from '../store/index'
@@ -104,12 +106,21 @@ export default {
 .swipeItem {
   margin-top: 0.25rem;
   max-width: 2.4rem;
-  img {
+
+  .zhanwei {
     border-radius: 0.1rem;
     width: 95%;
-    height: 95%;
-    background-color: #F7F7F9;
+    height: 2.1rem;
+    background-color: #ccc;
+
+    img {
+      border-radius: 0.1rem;
+      width: 100%;
+      height: 100%;
+      background-color: #ececec;
+    }
   }
+
 
   .title {
     color: rgb(87, 84, 84);
