@@ -7,6 +7,7 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_3228435_w675zdy8yre.css"></link>
     <script src="//at.alicdn.com/t/font_3228435_so6pwfwetd.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/vant/3.4.3/index.css" rel="stylesheet">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
 
@@ -14,10 +15,15 @@
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    
     <div id="app"></div>
     
     <!-- built files will be auto injected -->
-    
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.33/vue.global.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.26.0/axios.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/4.0.3/vue-router.global.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vuex/4.0.0/vuex.global.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vant/3.4.3/vant.js"></script>
   </body>
   <script src="<%= BASE_URL %>js/rem.js"></script>
   <!-- <style type="text/css">

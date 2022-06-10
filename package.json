@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build --report"
   },
   "dependencies": {
     "@vueuse/core": "^8.5.0",
@@ -28,6 +28,7 @@
     "@vue/cli-service": "~5.0.0",
     "babel-plugin-import": "^1.13.3",
     "less": "^4.0.0",
-    "less-loader": "^8.0.0"
+    "less-loader": "^8.0.0",
+    "webpack-bundle-analyzer": "^4.5.0"
   }
 }
