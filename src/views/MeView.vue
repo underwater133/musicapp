@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import {ref,reactive, onMounted, computed, watch, onBeforeUnmount} from 'vue'
+import {ref,reactive} from 'vue'
 import {useRouter} from 'vue-router'
 import {logout, getUserPlayList} from '../api/index'
 import mePlayList from '../components/mePlayList.vue'

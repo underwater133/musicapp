@@ -11,13 +11,12 @@
 <script>
 import {reactive} from 'vue'
 import {useRouter} from 'vue-router'
-import {Dialog} from 'vant'
+// import {Dialog} from 'vant'
 import {getBallIcon} from '../api/index'
 export default {
   name: 'iconList',
   async setup(){
     let iconList = reactive([])
-
 
     const router = useRouter()
     //到每日推荐歌曲
@@ -29,7 +28,7 @@ export default {
           })
         }
         else{
-          Dialog.alert({
+          vant.Dialog.alert({
             message:"未登录"
           })
         }

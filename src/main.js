@@ -3,10 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import 'vant/lib/index.css'
-import {Swipe, SwipeItem , Tab, Tabs, Progress, Form, Field, 
-  CellGroup,Dialog, List, Popup, Toast, SwipeCell, Button, Cell, Lazyload,
-  Overlay,Skeleton, PullRefresh, Badge} from 'vant'
+// import 'vant/lib/index.css'
+// import {Swipe, SwipeItem , Tab, Tabs, Progress, Form, Field, 
+//   CellGroup,Dialog, List, Popup, Toast, SwipeCell, Button, Cell, Lazyload,
+//   Overlay,Skeleton, PullRefresh, Badge} from 'vant'
+// import 
 
 import { useIntersectionObserver } from '@vueuse/core'
 const app = createApp(App)
@@ -28,22 +29,23 @@ app.directive('img-lazy', {
 
 app.use(store)
   .use(router)
-  .use(Swipe)
-  .use(SwipeItem)
-  .use(Tab)
-  .use(Tabs)
-  .use(Progress)
-  .use(Form)
-  .use(Field)
-  .use(CellGroup)
-  .use(Dialog)
-  .use(List)
-  .use(Popup)
-  .use(Toast)
-  .use(SwipeCell)
-  .use(Button)
-  .use(Cell)
-  .use(Lazyload,{
+  .use(vant)
+  // .use(vant.Swipe)
+  // .use(vant.SwipeItem)
+  // .use(vant.Tab)
+  // .use(vant.Tabs)
+  // .use(vant.Progress)
+  // .use(vant.Form)
+  // .use(vant.Field)
+  // .use(vant.CellGroup)
+  // .use(vant.Dialog)
+  // .use(vant.List)
+  // .use(vant.Popup)
+  // .use(vant.Toast)
+  // .use(vant.SwipeCell)
+  // .use(vant.Button)
+  // .use(vant.Cell)
+  .use(vant.Lazyload,{
     HomeView:true,
     highQualitySongsRec:true,
     newMusic:true,
@@ -52,9 +54,9 @@ app.use(store)
     musicListTop:true,
     musicList:true
   })
-  .use(Overlay)
-  .use(Skeleton)
-  .use(PullRefresh)
-  .use(Badge)
+  // .use(vant.Overlay)
+  // .use(vant.Skeleton)
+  // .use(vant.PullRefresh)
+  // .use(vant.Badge)
 
 app.mount('#app')

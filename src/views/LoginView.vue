@@ -45,7 +45,7 @@ import { ref } from 'vue';
 import {loginByPhone, getUserDetail} from '../api/index'
 import {useRouter} from 'vue-router'
 import store from '../store/index'
-import { Dialog } from 'vant';
+// import { Dialog } from 'vant';
 import md5 from 'js-md5'
 import {account} from '../../account'
 export default {
@@ -74,7 +74,7 @@ export default {
 
       // 账号或密码错误
       else{
-        Dialog.alert({
+        vant.Dialog.alert({
           message: '手机号或密码错误',
         }).then(() => {
           // on close

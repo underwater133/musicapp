@@ -47,7 +47,7 @@ import playMusicDetail from '../playMusicDetail.vue'
 import {computed,reactive,ref,watch, provide} from 'vue'
 import {getLyric,checkMusic, getMusicUrl} from '../../api/index'
 import popPlaylist from './popPlaylist.vue'
-import {Dialog, Toast} from 'vant'
+// import {Dialog, Toast} from 'vant'
 export default {
   name:'playControllor',
   components:{playMusicDetail,MarqueeText,popPlaylist},
@@ -72,7 +72,7 @@ export default {
           audio.value.play()
         }
         else{
-          Dialog.alert({
+          vant.Dialog.alert({
             message: '因合作方要求，该资源暂时无法收听',
           }).then(() => {
             nextSong()
@@ -101,9 +101,9 @@ export default {
       playmode.value = (playmode.value+1)%3
       localStorage.playmode = playmode.value
       switch(playmode.value){
-        case 0:Toast("列表循环"); break;
-        case 1:Toast("单曲循环"); break;
-        case 2:Toast("随机播放"); break;
+        case 0:vant.Toast("列表循环"); break;
+        case 1:vant.Toast("单曲循环"); break;
+        case 2:vant.Toast("随机播放"); break;
       }
     }
 

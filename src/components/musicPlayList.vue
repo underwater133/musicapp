@@ -111,7 +111,7 @@ import {useRoute,useRouter} from 'vue-router'
 import {getLatestPlayList,getAllTracks,getMusicUrl,getUserPlayList,
           delFromMyPlayList,subscribePlaylist,getDailyRecSongs} from '../api/index'
 import {formatCount} from '../util/formatPlayCount'
-import {Dialog, Toast} from 'vant'
+// import {Dialog, Toast} from 'vant'
 import mePlayList from '../components/mePlayList.vue'
 import store from '../store/index'
 export default {
@@ -143,7 +143,7 @@ export default {
           }
           finished.value = true;
         }).catch(err=>{
-          Dialog.alert({
+          vant.Dialog.alert({
             message: '未知错误',
           }).then(() => {
             // on close
@@ -189,7 +189,7 @@ export default {
           }
           
         }).catch(err=>{
-          Dialog.alert({
+          vant.Dialog.alert({
             message: '未知错误',
           }).then(() => {
             // on close
@@ -253,7 +253,7 @@ export default {
     //收藏到歌单
     function selectGedan(){
       if(!localStorage.login){
-        Dialog.alert({
+        vant.Dialog.alert({
           message: '未登录',
           theme: 'round-button',
         }).then(() => {
@@ -288,7 +288,7 @@ export default {
         alink.href=res.data.data[0].url
         document.body.appendChild(alink);
         alink.click();
-        Toast("下载后将保存到/Download目录下")
+        vant.Toast("下载后将保存到/Download目录下")
       })
       .catch(err=>{})
 
@@ -315,7 +315,7 @@ export default {
     //收藏/取消收藏歌单
     async function subGedan(t){
       if(!localStorage.login){
-        Dialog.alert({
+        vant.Dialog.alert({
           message: '未登录',
           theme: 'round-button',
         }).then(() => {
@@ -325,10 +325,10 @@ export default {
       else{
         subscribePlaylist(t,routes.query.id)
         if(t == 1){
-          Toast("已收藏")
+          vant.Toast("已收藏")
         }
         else{
-          Toast("已取消收藏")
+          vant.Toast("已取消收藏")
         }
       }
     }

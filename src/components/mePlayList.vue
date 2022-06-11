@@ -21,7 +21,7 @@
 import {ref} from 'vue'
 import {useRouter} from 'vue-router'
 import {addToMyPlayList} from '../api/index'
-import { Toast } from 'vant'
+// import { Toast } from 'vant'
 export default {
   name:'mePlayList',
   props:['playlist', 'msg','musicId', 'listId'],
@@ -42,13 +42,13 @@ export default {
       else{  //添加到歌单
         addToMyPlayList(id,props.musicId).then(res=>{
           if(res.data.body.code == 502){
-            Toast('歌单内歌曲重复')
+            vant.Toast('歌单内歌曲重复')
           }
           else if(res.data.body.code == 200){
-            Toast('添加成功')
+            vant.Toast('添加成功')
           }
           else{
-            Toast('添加失败')
+            vant.Toast('添加失败')
           }
         })
         content.emit('hidepop')
