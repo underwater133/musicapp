@@ -33,10 +33,12 @@
       :finished="finished"
       finished-text="没有更多了"
       @load="onLoad" class="musicList"
+      id="list"
+      @click="listClick"
     >
 
-      <van-swipe-cell v-for="(item, index) in playList.data.tracks" :key="index" >
-        <div class="show" @click="playMusic(index)">
+      <van-swipe-cell v-for="(item, index) in playList.data.tracks" :key="index" :id="index">
+        <div class="show" >
           <div class="left">
             <img v-if="msg=='每日推荐'" v-img-lazy="item.al.picUrl" alt="" style="width:0.7rem;height:0.7rem;border-radius:5px;">
             <svg v-else-if="playingInList && playindex==index" style="width:0.38rem; height:0.38rem;" t="1647768647858" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2741" width="48" height="48"><path d="M499.353613 1023.998976a76.287924 76.287924 0 0 1-76.083124-76.083124V76.083124A76.287924 76.287924 0 0 1 499.353613 0 76.287924 76.287924 0 0 1 575.487937 76.083124v871.935128A76.287924 76.287924 0 0 1 499.353613 1023.998976z m346.521253 0a76.287924 76.287924 0 0 1-76.083124-76.083124v-340.889259a76.287924 76.287924 0 0 1 76.083124-76.083124 76.287924 76.287924 0 0 1 76.083124 76.083124v340.991659A76.287924 76.287924 0 0 1 845.874866 1023.998976zM152.883559 1023.998976A76.287924 76.287924 0 0 1 76.800435 947.915852V415.333985a76.287924 76.287924 0 0 1 76.083124-76.083124 76.287924 76.287924 0 0 1 76.083124 76.083124v532.684267A76.339124 76.339124 0 0 1 152.883559 1023.998976z" fill="#d41d05" p-id="2742"></path></svg>
@@ -53,7 +55,7 @@
           </div>
           <div class="right">
             <!-- <svg t="1647018847950" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5760" width="48" height="48"><path d="M233.43968 179.043792H790.559297c42.98807 0 82.202187 17.588587 110.690008 45.613874 28.29237 28.511357 45.857421 67.945485 45.857421 110.952998v352.799138c0 43.22957-17.564028 82.417081-45.857421 110.690008-28.487821 28.29237-67.700915 45.856397-110.690008 45.856398H233.43968c-42.986023 0-81.95864-17.564028-110.471021-45.856398-28.511357-28.271904-46.076408-67.459415-46.076408-110.690008V335.612711c0-43.00649 17.564028-82.440617 46.076408-110.952998 28.512381-28.02631 67.483974-45.61592 110.471021-45.615921z m565.758368 58.741869H224.792743c-25.232684 0-48.258097 10.284227-65.389267 27.438933-16.654308 16.654308-26.937512 39.680744-26.937512 64.908312v363.745444c0 25.457812 10.284227 48.483224 26.937512 65.389267 17.131169 16.905018 40.156582 27.188222 65.389267 27.188222h574.406328c25.232684 0 48.483224-10.283204 65.139579-27.188222 17.154705-16.906042 27.437909-39.931454 27.437909-65.389267v-363.744421c0-25.228591-10.283204-48.254004-27.437909-64.908312-16.657378-17.155728-39.907918-27.439956-65.140602-27.439956z" fill="#A7A7A7" p-id="5761"></path><path d="M400.75843 682.377412a21.904892 21.904892 0 0 1-21.906939-21.905916V365.628328a21.904892 21.904892 0 0 1 32.859385-18.97005l255.341502 147.421584a21.903869 21.903869 0 0 1 0 37.9401L411.711899 679.441547a21.903869 21.903869 0 0 1-10.953469 2.935865z m21.905916-278.806937v218.957851l189.623755-109.479437-189.623755-109.478414z" fill="#A7A7A7" p-id="5762"></path></svg> -->
-            <svg @click.stop="switchPopup(index)" t="1647016948783" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2087" width="48" height="48"><path d="M512 213.333333m-106.666667 0a106.666667 106.666667 0 1 0 213.333334 0 106.666667 106.666667 0 1 0-213.333334 0Z" p-id="2088" fill="#A7A7A7"></path><path d="M512 512m-106.666667 0a106.666667 106.666667 0 1 0 213.333334 0 106.666667 106.666667 0 1 0-213.333334 0Z" p-id="2089" fill="#A7A7A7"></path><path d="M512 810.666667m-106.666667 0a106.666667 106.666667 0 1 0 213.333334 0 106.666667 106.666667 0 1 0-213.333334 0Z" p-id="2090" fill="#A7A7A7"></path></svg>
+            <svg id="popup" t="1647016948783" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2087" width="48" height="48"><path d="M512 213.333333m-106.666667 0a106.666667 106.666667 0 1 0 213.333334 0 106.666667 106.666667 0 1 0-213.333334 0Z" p-id="2088" fill="#A7A7A7"></path><path d="M512 512m-106.666667 0a106.666667 106.666667 0 1 0 213.333334 0 106.666667 106.666667 0 1 0-213.333334 0Z" p-id="2089" fill="#A7A7A7"></path><path d="M512 810.666667m-106.666667 0a106.666667 106.666667 0 1 0 213.333334 0 106.666667 106.666667 0 1 0-213.333334 0Z" p-id="2090" fill="#A7A7A7"></path></svg>
           </div>
         </div>
         <template #right v-if="routes.query.msg == '创建歌单' || routes.query.msg == '喜欢'">
@@ -198,6 +200,7 @@ export default {
       }
     }
 
+
     //正在播放的显示样式
     let listId = computed(()=>store.state.playListId)
     let playindex = computed(()=>store.state.playCurrentIndex)
@@ -235,7 +238,7 @@ export default {
     }
 
 
-
+    //显示弹窗
     const currentIndex = ref(0)
     const showpopup = ref(false)
     const showlevel = ref(0)
@@ -333,11 +336,29 @@ export default {
       }
     }
 
+    //点击列表的 事件委托
+    function listClick(e){
+      let node = e.target;
+      let type = e.target.id == "popup"? 1 : 0
+      while (node.parentNode.id != "list") { //一层一层向上找, 
+        node = node.parentNode;
+      }
+      //目前还在子元素这里
+      let index = parseInt(node.id)
+
+      if(type == 1){ //显示弹窗
+        switchPopup(index)
+      }
+      else{ //播放音乐
+        playMusic(index)
+      }
+    }
+
     return {
       playList,formatCount,playMusic,router,playall,
       loading,finished,onLoad,routes,showpopup,switchPopup,currentIndex,
       addToNext,download,selectGedan,showlevel,createPlayList,
-      delFromGeDan,subGedan,playingInList,playindex
+      delFromGeDan,subGedan,playingInList,playindex,listClick
     }
   }
 }
