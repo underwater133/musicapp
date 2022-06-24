@@ -7,7 +7,6 @@ import store from './store'
 // import {Swipe, SwipeItem , Tab, Tabs, Progress, Form, Field, 
 //   CellGroup,Dialog, List, Popup, Toast, SwipeCell, Button, Cell, Lazyload,
 //   Overlay,Skeleton, PullRefresh, Badge} from 'vant'
-// import 
 
 import { useIntersectionObserver } from '@vueuse/core'
 const app = createApp(App)
@@ -30,21 +29,21 @@ app.directive('img-lazy', {
 app.use(store)
   .use(router)
   .use(vant)
-  // .use(vant.Swipe)
-  // .use(vant.SwipeItem)
-  // .use(vant.Tab)
-  // .use(vant.Tabs)
-  // .use(vant.Progress)
-  // .use(vant.Form)
-  // .use(vant.Field)
-  // .use(vant.CellGroup)
-  // .use(vant.Dialog)
-  // .use(vant.List)
-  // .use(vant.Popup)
-  // .use(vant.Toast)
-  // .use(vant.SwipeCell)
-  // .use(vant.Button)
-  // .use(vant.Cell)
+  // .use(Swipe)
+  // .use(SwipeItem)
+  // .use(Tab)
+  // .use(Tabs)
+  // .use(Progress)
+  // .use(Form)
+  // .use(Field)
+  // .use(CellGroup)
+  // .use(Dialog)
+  // .use(List)
+  // .use(Popup)
+  // .use(Toast)
+  // .use(SwipeCell)
+  // .use(Button)
+  // .use(Cell)
   .use(vant.Lazyload,{
     HomeView:true,
     highQualitySongsRec:true,
@@ -54,9 +53,9 @@ app.use(store)
     musicListTop:true,
     musicList:true
   })
-  // .use(vant.Overlay)
-  // .use(vant.Skeleton)
-  // .use(vant.PullRefresh)
-  // .use(vant.Badge)
+  // .use(Overlay)
+  // .use(Skeleton)
+  // .use(PullRefresh)
+  // .use(Badge)
 
 app.mount('#app')
