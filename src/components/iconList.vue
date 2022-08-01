@@ -43,7 +43,7 @@ export default {
     iconList.push(...res.data.data)
     let iconClass = ""
     if (!iconList.length) {
-      iconClass = "position: absolute;  top: 50%;left: 50%;transform: translate(-48%, -50%);width: 60%;height: 60%;"
+      iconClass = "position: absolute;  top: 50%;left: 50%;transform: translate(-48%, -50%);width: 55%;height: 55%;"
       const list = [
         {
           name: "每日推荐",
