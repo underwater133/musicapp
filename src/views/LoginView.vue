@@ -4,31 +4,20 @@
 
     <van-form @submit="onSubmit" class="myform">
       <van-cell-group inset>
-        <van-field
-          v-model="phone"
-          name="手机号"
-          label="手机号"
-          placeholder="手机号"
-        />
-        <van-field
-          v-model="password"
-          type="password"
-          name="密码"
-          label="密码"
-          placeholder="密码"
-        />  
+        <van-field v-model="phone" name="手机号" label="手机号" placeholder="手机号" />
+        <van-field v-model="password" type="password" name="密码" label="密码" placeholder="密码" />
       </van-cell-group>
       <!-- <span style="width:100%;text-align: center;">测试账号：admin,密码:123456</span> -->
       <button class="submit">登陆</button>
     </van-form>
-    
+
     <div class="other">
       <span @click="show = true">忘记密码？</span>
       <span @click="router.back()">返回</span>
     </div>
 
     <van-overlay :show="show" @click="show = false">
-      <div class="wrapper" >
+      <div class="wrapper">
         <div class="block">
           请到网易云音乐APP或者PC端官网进行修改密码，欸嘿~
         </div>
@@ -42,21 +31,27 @@
 
 <script>
 import { ref } from 'vue';
-import {loginByPhone, getUserDetail} from '../api/index'
-import {useRouter} from 'vue-router'
+import { loginByPhone, getUserDetail } from '../api/index'
+import { useRouter } from 'vue-router'
 import store from '../store/index'
 // import { Dialog } from 'vant';
 import md5 from 'js-md5'
 // import {account} from '../../account'
 export default {
-  name:'LoginView',
+  name: 'LoginView',
   setup(props) {
     const phone = ref('');
     const password = ref('');
     const router = useRouter()
     // 登陆
-    async function onSubmit(values){
-      let res = await loginByPhone(values.手机号, md5(values.密码))
+    async function onSubmit(values) {
+      let res = await loginByPhone(values.手机号, md5(values.密码)).catch(err => {
+        vant.Dialog.alert({
+          message: '手机号或密码错误',
+        }).then(() => {
+          // on close
+        });
+      })
 
       // 不提供测试账号
       // if(values.手机号 === 'admin' && values.密码 === '123456'){
@@ -65,22 +60,13 @@ export default {
       // else res = await loginByPhone(values.手机号, md5(values.密码))
 
       // 登陆成功
-      if(res.data.token){
+      if (res && res.data.token) {
         let userDetail = await getUserDetail(res.data.account.id)
-        store.commit('setUserData',userDetail.data)
+        store.commit('setUserData', userDetail.data)
         localStorage.login = true
         localStorage.userDetail = JSON.stringify(userDetail.data)
         localStorage.cookie = encodeURIComponent(res.data.cookie)
         router.replace('/me')
-      }
-
-      // 账号或密码错误
-      else{
-        vant.Dialog.alert({
-          message: '手机号或密码错误',
-        }).then(() => {
-          // on close
-        });
       }
     };
 
@@ -99,7 +85,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.login{
+.login {
   width: 100vw;
   height: 100vh;
   background-color: rgb(189, 54, 4);
@@ -111,19 +97,22 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  >img{
+
+  >img {
     margin-top: 3rem;
     width: 1.3rem;
     height: 1.3rem;
     border-radius: 50%;
   }
-  .myform{
+
+  .myform {
     margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
     // justify-content: center;
     align-items: center;
-    .submit{
+
+    .submit {
       margin-top: 0.5rem;
       width: 3rem;
       height: 0.7rem;
@@ -132,40 +121,47 @@ export default {
       border-radius: 20px;
       border: none;
     }
-    .van-cell,.van-cell-group{
+
+    .van-cell,
+    .van-cell-group {
       background-color: rgb(124, 37, 5);
     }
-    label{
+
+    label {
       color: white;
     }
-    input{
+
+    input {
       color: white !important;
     }
   }
-  .other{
+
+  .other {
     margin-top: 0.2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    span{
+
+    span {
       font-size: 0.25rem;
       color: rgb(201, 201, 201);
       margin-bottom: 0.2rem;
     }
   }
+
   .wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
   }
+
   .block {
     width: 6rem;
     background-color: rgb(235, 233, 233);
     border-radius: 15px;
     text-align: center;
-    
+
   }
 }
-
 </style>
