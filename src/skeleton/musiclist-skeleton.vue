@@ -1,19 +1,21 @@
 <template>
-  <ContentLoader width="350" height="195">
-    <rect x="10" y="15" rx="7" ry="7" width="60" height="25" />
-    <!-- <rect x="290" y="15" rx="7" ry="7" width="60" height="25" /> -->
-    <rect x="10" y="45" rx="7" ry="7" width="110" height="110" />
-    <rect x="10" y="165" rx="7" ry="7" width="110" height="10" />
-    <rect x="10" y="180" rx="7" ry="7" width="110" height="10" />
+  <div style="width: 100%;">
+    <ContentLoader width="350" height="195">
+      <rect x="10" y="15" rx="7" ry="7" width="60" height="25" />
+      <!-- <rect x="290" y="15" rx="7" ry="7" width="60" height="25" /> -->
+      <rect x="10" y="45" rx="7" ry="7" width="110" height="110" />
+      <rect x="10" y="165" rx="7" ry="7" width="110" height="10" />
+      <rect x="10" y="180" rx="7" ry="7" width="110" height="10" />
 
-    <rect x="125" y="45" rx="7" ry="7" width="110" height="110" />
-    <rect x="125" y="165" rx="7" ry="7" width="110" height="10" />
-    <rect x="125" y="180" rx="7" ry="7" width="110" height="10" />
+      <rect x="125" y="45" rx="7" ry="7" width="110" height="110" />
+      <rect x="125" y="165" rx="7" ry="7" width="110" height="10" />
+      <rect x="125" y="180" rx="7" ry="7" width="110" height="10" />
 
-    <rect x="240" y="45" rx="7" ry="7" width="110" height="110" />
-    <rect x="240" y="165" rx="7" ry="7" width="110" height="10" />
-    <rect x="240" y="180" rx="7" ry="7" width="110" height="10" />
-  </ContentLoader>
+      <rect x="240" y="45" rx="7" ry="7" width="110" height="110" />
+      <rect x="240" y="165" rx="7" ry="7" width="110" height="10" />
+      <rect x="240" y="180" rx="7" ry="7" width="110" height="10" />
+    </ContentLoader>
+  </div>
 </template>
 
 <script>
@@ -23,7 +25,7 @@ import {
 } from 'vue-content-loader'
 export default {
   name: 'musiclist-skeleton',
-  components:{ContentLoader}
+  components: { ContentLoader }
 }
 </script>
 
