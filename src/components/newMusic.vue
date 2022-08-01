@@ -74,6 +74,9 @@ export default {
 </script>
 
 <style lang="less">
+.van-tab{
+  line-height: normal;
+}
 .newMusic{
   padding: 0 0.2rem;
   // margin-top: 0.5rem;
