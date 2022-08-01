@@ -2,7 +2,7 @@ import axios from 'axios'
 
 //获取轮播图,有多种类型
 //0为pc, 1为安卓, 2为iphone, 3为iPad  默认为2
-const url = "http://sleeping.icu:3000"
+const url = "https://netease-cloud-music-api-five-topaz-52.vercel.app"
 export function getBanner(type = 2){
   return axios.get(url + `/banner?type=${type}`)
 }

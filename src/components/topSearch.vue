@@ -114,8 +114,8 @@ export default {
 
     // 搜索
     async function toSearch(type){
-      search(keyword.value,offset,1).then(res=>{        
-        if(type == 1){
+      search(keyword.value,offset,1).then(res=>{      
+        if(type == 1 && res.data.result.songs){
           searchAns.songs.push(...res.data.result.songs)
           for(let item of searchAns.songs){
             let name = ""
