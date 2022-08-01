@@ -4,7 +4,8 @@
       <span>推荐歌单</span>
       <!-- <span>查看更多</span> -->
     </div>
-    <van-swipe class="my-swipe" :show-indicators="false" :loop="false" :width="reaWidth">
+    <musiclistSkeleton v-if="show"></musiclistSkeleton>
+    <van-swipe v-else class="my-swipe" :show-indicators="false" :loop="false" :width="reaWidth">
       <van-swipe-item v-for="item in musicList" :key="item.id" class="swipeItem">
         <router-link :to="{
           name: 'musicList',
@@ -34,12 +35,15 @@
 import { ref, reactive, onActivated } from 'vue'
 import { getMusicList, dayRecMuiscList } from '../api/index'
 import { formatCount } from '../util/formatPlayCount'
+import musiclistSkeleton from '../skeleton/musiclist-skeleton.vue'
 import store from '../store/index'
 export default {
   name: 'musicList',
-  async setup() {
+  components:{musiclistSkeleton},
+  setup() {
     let musicList = reactive([])
     let reaWidth = ref(160)
+    let show = ref(true)
     function changeReaWidth() {
       var deviceWidth = document.documentElement.clientWidth || window.innerWidth;
       reaWidth.value = deviceWidth * 0.3
@@ -58,6 +62,7 @@ export default {
           musicList.push(...res.data.result)
         })
       }
+      show.value = false
     }
     changeReaWidth()
 
@@ -71,8 +76,8 @@ export default {
 
     })
 
-    await getData()
-    return { musicList, reaWidth, formatCount }
+    getData()
+    return { musicList, reaWidth, formatCount, show }
   }
 }
 

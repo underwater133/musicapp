@@ -17,12 +17,7 @@
     </Suspense>
 
     <!-- 推荐歌单 -->
-    <Suspense>
-      <musicList />
-      <template #fallback>
-        <musiclistSkeleton></musiclistSkeleton>
-      </template>
-    </Suspense>
+    <musicList />
 
     <!-- 精品歌曲推荐 -->
     <highQualitySongsRec />
@@ -51,12 +46,11 @@ import musicList from '../components/musicList.vue'
 import highQualitySongsRec from '../components/highQualitySongs.vue'
 import musicRank from '../components/musicRank.vue'
 import newMusic from '../components/newMusic.vue'
-import musiclistSkeleton from '../skeleton/musiclist-skeleton.vue'
 import iconSkeleton from '../skeleton/icon-skeleton.vue'
 export default {
   name: 'HomeView',
   components: {
-    topNav, SwiperCom, iconList, musicList, highQualitySongsRec, musicRank, newMusic,musiclistSkeleton,iconSkeleton
+    topNav, SwiperCom, iconList, musicList, highQualitySongsRec, musicRank, newMusic,iconSkeleton
   },
   setup() {
   }
