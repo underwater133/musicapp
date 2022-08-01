@@ -56,7 +56,7 @@ export default {
       }
     }
     onMounted(async ()=>{
-      await getHighQuality(5, '华语').then(res=>{
+      await getHighQuality(2, '华语').then(res=>{
         
         album.huayu.push(...res.data.playlists)
         

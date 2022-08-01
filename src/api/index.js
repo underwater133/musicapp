@@ -1,24 +1,23 @@
-import axios from 'axios'
+import request from './request'
 
 //获取轮播图,有多种类型
 //0为pc, 1为安卓, 2为iphone, 3为iPad  默认为2
-const url = "https://netease-cloud-music-api-five-topaz-52.vercel.app"
 export function getBanner(type = 2){
-  return axios.get(url + `/banner?type=${type}`)
+  return request.get( `/banner?type=${type}`)
 }
 
 //获取图标栏图标
 export function getBallIcon(){
-  return axios.get(url + '/homepage/dragon/ball');
+  return request.get( '/homepage/dragon/ball');
 }
 
 //获取推荐歌单,默认获取六条数据(无需登陆)
 export function getMusicList(num = 6){
-  return axios.get(url + `/personalized?limit=${num}`)
+  return request.get( `/personalized?limit=${num}`)
 }
 //获取每日推荐歌单（需登陆）
 export function dayRecMuiscList(){
-  return axios.get(url + '/recommend/resource?cookie=' + localStorage.cookie)
+  return request.get( '/recommend/resource?cookie=' + localStorage.cookie)
 }
 
 
@@ -27,7 +26,7 @@ export function dayRecMuiscList(){
 // limit: 取出歌单数量 , 默认为 20
 // before: 分页参数,取上一页最后一个歌单的 updateTime 获取下一页数据
 export function getHighQuality(limit,cat){
-  return axios.get(url + `/top/playlist/highquality/tags?limit=${limit}&cat=${cat}`)
+  return request.get( `/top/playlist/highquality/tags?limit=${limit}&cat=${cat}`)
 }
 
 //获取歌单歌曲  排行榜也算歌单的一种
@@ -35,18 +34,18 @@ export function getHighQuality(limit,cat){
 // 可选参数 : limit : 限制获取歌曲的数量，默认值为当前歌单的歌曲数量
 // 可选参数 : offset : 默认值为0
 export function getAlbumMusic(id, limit){
-  return axios.get(url + `/playlist/track/all?id=${id}&limit=${limit}`)
+  return request.get( `/playlist/track/all?id=${id}&limit=${limit}`)
 }
 
 //获取云音乐首页最新专辑
 export function getNeweastAlbum(){
-  return axios.get(url + '/album/newest')
+  return request.get( '/album/newest')
 }
 
 //获取新歌推荐
 // limit: 取出数量 , 默认为 10 (不支持 offset)
 export function getNewSongRec(limit){
-  return axios.get(url + `/personalized/newsong?limit=${limit}`)
+  return request.get( `/personalized/newsong?limit=${limit}`)
 }
 
 //获取网易云新碟
@@ -56,7 +55,7 @@ export function getNewSongRec(limit){
 // offset : 偏移数量，用于分页 , 如 :( 页数 -1)*30, 其中 30 为 limit 的值 , 默认为 0
 // area : ALL:全部,ZH:华语,EA:欧美,KR:韩国,JP:日本
 export function getNewDie(limit){
-  return axios.get(url + `/album/new?limit=${limit}`)
+  return request.get( `/album/new?limit=${limit}`)
 }
 
 // 获取歌单详情
@@ -64,20 +63,20 @@ export function getNewDie(limit){
 // 可选参数 : s : 歌单最近的 s 个收藏者,默认为 8
 // 接口地址 : /playlist/detail
 export function getPlayListDetail(id){
-  return axios.get(url + `/playlist/detail?id=${id}&cookie=` + localStorage.cookie)
+  return request.get( `/playlist/detail?id=${id}&cookie=` + localStorage.cookie)
 }
 
 //获取歌单所有歌曲
 // 可选参数 : limit : 限制获取歌曲的数量，默认值为当前歌单的歌曲数量
 // 可选参数 : offset : 默认值为0
 export function getAllTracks(id, limit = 10, offset = 0){
-  return axios.get(url + `/playlist/track/all?id=${id}&limit=${limit}&offset=${offset}&cookie=` + localStorage.cookie)
+  return request.get( `/playlist/track/all?id=${id}&limit=${limit}&offset=${offset}&cookie=` + localStorage.cookie)
 }
 
 // 获取歌词
 // 必选参数 : id: 音乐 id
 export function getLyric(id){
-  return axios.get(url + `/lyric?id=${id}`)
+  return request.get( `/lyric?id=${id}`)
 }
 
 // 搜索
@@ -89,7 +88,7 @@ export function getLyric(id){
 // 接口地址 : /search 或者 /cloudsearch(更全)
 // 调用例子 : /search?keywords=海阔天空 /cloudsearch?keywords=海阔天空
 export function search(keywords, offset, type){
-  return axios.get(url + `/search?keywords=${keywords}&offset=${offset}&type=${type}&limit=20`)
+  return request.get( `/search?keywords=${keywords}&offset=${offset}&type=${type}&limit=20`)
 }
 
 // 获取歌曲详情
@@ -98,7 +97,7 @@ export function search(keywords, offset, type){
 // 接口地址 : /song/detail
 // 调用例子 : /song/detail?ids=347230,/song/detail?ids=347230,347231
 export function getSongDetail(ids){
-  return axios.get(url + `/song/detail?ids=${ids}`)
+  return request.get( `/song/detail?ids=${ids}`)
 }
 
 //手机登陆
@@ -110,7 +109,7 @@ export function getSongDetail(ids){
 // md5_password: md5 加密后的密码,传入后 password 参数将失效
 // captcha: 验证码,使用 /captcha/sent接口传入手机号获取验证码,调用此接口传入验证码,可使用验证码登录,传入后 password 参数将失效
 export function loginByPhone(phone,password){
-  return axios.get(url + `/login/cellphone?phone=${phone}&password=""&md5_password=${password}`)
+  return request.get( `/login/cellphone?phone=${phone}&password=""&md5_password=${password}`)
 }
 
 
@@ -129,19 +128,19 @@ export function loginByPhone(phone,password){
 //     cookie:"xxx"
 // }
 export function loginByEmail(email,password){
-  return axios.get(url + `/login?email=${email}&password=${password}`)
+  return request.get( `/login?email=${email}&password=${password}`)
 }
 
 // 退出登陆
 export function logout(){
-  return axios.get(url + '/logout') 
+  return request.get( '/logout') 
 }
 
 //获取用户详情
 //需登录
 //496425217
 export function getUserDetail(uid){
-  return axios.get(url + `/user/detail?uid=${uid}`)
+  return request.get( `/user/detail?uid=${uid}`)
 }
 
 // 获取喜欢音乐列表
@@ -150,7 +149,7 @@ export function getUserDetail(uid){
 // 接口地址 : /likelist
 // 调用例子 : /likelist?uid=32953014
 export function getLikeList(uid){
-  return axios.get(url + `/likelist?uid=${uid}`)
+  return request.get( `/likelist?uid=${uid}`)
 }
 
 // 获取用户歌单
@@ -163,36 +162,36 @@ export function getLikeList(uid){
 // 调用例子 : /user/playlist?uid=32953014
 // 创建者id与用户id相同的则是自己创建的，不同的则是收藏的
 export function getUserPlayList(uid){
-  return axios.get(url + `/user/playlist?uid=${uid}`)
+  return request.get( `/user/playlist?uid=${uid}`)
 }
 
 // 音乐是否可用
 export function checkMusic(id){
-  return axios.get(url + `/check/music?id=${id}`)
+  return request.get( `/check/music?id=${id}`)
 }
 
 // 获取音乐url
 export function getMusicUrl(id,br=320000,cookie="",){
-  return axios.get(url + `/song/url?id=${id}&br=${br}&cookie=${cookie}`)
+  return request.get( `/song/url?id=${id}&br=${br}&cookie=${cookie}`)
 }
 
 // 获取已购数字专辑
 // 可选参数： limit
 export function getPurchasedAlbum(){
-  return axios.get(url + '/digitalAlbum/purchased?cookie=' + localStorage.cookie)
+  return request.get( '/digitalAlbum/purchased?cookie=' + localStorage.cookie)
 }
 
 // 获取已购单曲
 // 可选参数 : limit: 取出评论数量 , 默认为 20
 // offset: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*10, 其中 10 为 limit 的值
 export function getPurchasedSongs(){
-  return axios.get(url + '/song/purchased?cookie=' + localStorage.cookie)
+  return request.get( '/song/purchased?cookie=' + localStorage.cookie)
 }
 
 // 最近播放歌曲
 // 可选参数 : limit : 返回数量 , 默认为 100
 export function getLatestPlayList(limit=50){
-  return axios.get(url + `/record/recent/song?limit=${limit}&cookie=` + localStorage.cookie)
+  return request.get( `/record/recent/song?limit=${limit}&cookie=` + localStorage.cookie)
 }
 
 // 对歌单添加或删除歌曲
@@ -203,11 +202,11 @@ export function getLatestPlayList(limit=50){
 // 接口地址 : /playlist/tracks
 // 调用例子 : /playlist/tracks?op=add&pid=24381616&tracks=347231
 export function addToMyPlayList(pid,trackId){
-  return axios.get(url + `/playlist/tracks?op=add&pid=${pid}&tracks=${trackId}&cookie=` + localStorage.cookie)
+  return request.get( `/playlist/tracks?op=add&pid=${pid}&tracks=${trackId}&cookie=` + localStorage.cookie)
 }
 
 export function delFromMyPlayList(pid,trackId){
-  return axios.get(url + `/playlist/tracks?op=del&pid=${pid}&tracks=${trackId}&cookie=` + localStorage.cookie)
+  return request.get( `/playlist/tracks?op=del&pid=${pid}&tracks=${trackId}&cookie=` + localStorage.cookie)
 }
 
 // 收藏/取消收藏歌单
@@ -217,10 +216,10 @@ export function delFromMyPlayList(pid,trackId){
 // 接口地址 : /playlist/subscribe
 // 调用例子 : /playlist/subscribe?t=1&id=106697785 /playlist/subscribe?t=2&id=106697785
 export function subscribePlaylist(t, id){
-  return axios.get(url + `/playlist/subscribe?t=${t}&id=${id}&cookie=` + localStorage.cookie)
+  return request.get( `/playlist/subscribe?t=${t}&id=${id}&cookie=` + localStorage.cookie)
 }
 
 // 获取每日推荐歌曲（需登陆）
 export function getDailyRecSongs(){
-  return axios.get(url + '/recommend/songs?cookie=' + localStorage.cookie)
+  return request.get( '/recommend/songs?cookie=' + localStorage.cookie)
 }

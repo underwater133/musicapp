@@ -18,7 +18,7 @@
           placeholder="密码"
         />  
       </van-cell-group>
-      <span style="width:100%;text-align: center;">测试账号：admin,密码:123456</span>
+      <!-- <span style="width:100%;text-align: center;">测试账号：admin,密码:123456</span> -->
       <button class="submit">登陆</button>
     </van-form>
     
@@ -47,7 +47,7 @@ import {useRouter} from 'vue-router'
 import store from '../store/index'
 // import { Dialog } from 'vant';
 import md5 from 'js-md5'
-import {account} from '../../account'
+// import {account} from '../../account'
 export default {
   name:'LoginView',
   setup(props) {
@@ -56,11 +56,13 @@ export default {
     const router = useRouter()
     // 登陆
     async function onSubmit(values){
-      let res
-      if(values.手机号 === 'admin' && values.密码 === '123456'){
-        res = await loginByPhone(account.phone, md5(account.password))
-      }
-      else res = await loginByPhone(values.手机号, md5(values.密码))
+      let res = await loginByPhone(values.手机号, md5(values.密码))
+
+      // 不提供测试账号
+      // if(values.手机号 === 'admin' && values.密码 === '123456'){
+      //   res = await loginByPhone(account.phone, md5(account.password))
+      // }
+      // else res = await loginByPhone(values.手机号, md5(values.密码))
 
       // 登陆成功
       if(res.data.token){
