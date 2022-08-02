@@ -223,3 +223,11 @@ export function subscribePlaylist(t, id){
 export function getDailyRecSongs(){
   return request.get( '/recommend/songs?cookie=' + localStorage.cookie)
 }
+
+//歌单评论
+// 可选参数 : limit: 取出评论数量 , 默认为 20
+// offset: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*20, 其中 20 为 limit 的值
+// before: 分页参数,取上一页最后一项的 time 获取下一页数据(获取超过 5000 条评论的时候需要用到)
+export function playlistComments(id, limit = 20, offset = 0){
+  return request.get(`/comment/playlist?id=${id}&limit=${limit}&offset=${offset}`)
+}

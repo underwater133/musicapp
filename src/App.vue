@@ -2,7 +2,7 @@
   <div>
     <!-- 歌单页面不缓存，以防每次点进不同歌单显示的是同一个歌单 -->
     <router-view v-slot={Component}>
-      <keep-alive :exclude="['SearchView', 'MusicListView', 'MeView', 'LoginView']">
+      <keep-alive :exclude="['SearchView', 'MusicListView', 'MeView', 'LoginView', 'CommentsSession']">
         <component :is="Component"></component>
       </keep-alive>
     </router-view>

@@ -45,6 +45,11 @@ const routes = [
     path:'/dailyRecSongs',
     name:'dailyRecSongs',
     component: ()=> import ('../views/DailyRecSongsView.vue')
+  },
+  {
+    path:'/comments',
+    name:'comments',
+    component: () => import('../views/CommentsSession.vue')
   }
 ]
 
