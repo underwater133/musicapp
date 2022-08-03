@@ -8,7 +8,7 @@
           d="M729.972918 903.68375l-393.880789-391.691937 393.880789-391.68068c10.270924-10.214642 11.294231-25.719778 2.334161-34.666544-9.002025-8.925277-24.607444-7.902994-34.877345 2.322905L291.499515 491.617787c-5.846148 5.824659-8.601912 13.382798-8.270361 20.463054-0.267083 7.03523 2.468215 14.525831 8.314363 20.306488l405.885194 403.662573c10.269901 10.180873 25.919323 11.248182 34.877345 2.312672C741.267149 929.423995 740.243843 913.908626 729.972918 903.68375z"
           p-id="2771" fill="#2c2c2c"></path>
       </svg>
-      <span>评论(xxxx)</span>
+      <span>评论({{ formatCount(total) }})</span>
       <svg t="1659425218355" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
         p-id="8922" width="48" height="48">
         <path
@@ -20,9 +20,7 @@
     <commentHeader v-if="info.id" :type="info.type" :info="info"></commentHeader>
 
     <!-- 评论列表 -->
-    <commentList v-if="info.id" :id="info.id"></commentList>
-
-    <!-- 输入框 -->
+    <commentList v-if="info.id" :id="info.id" :type="info.type"></commentList>
   </div>
 </template>
 
@@ -30,16 +28,26 @@
 import { useRouter, useRoute } from "vue-router"
 import commentHeader from "../components/comment/header.vue"
 import commentList from "../components/comment/list.vue"
+import { newComments } from '../api/index'
+import { ref } from 'vue'
+import { formatCount } from '../util/formatPlayCount'
 export default {
   name: "CommentsSession",
   components: { commentHeader, commentList },
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const info = JSON.parse(route.params.info).data
-    console.log(info)
+    const info = JSON.parse(route.params.info)
+    const total = ref(0)
+
+    //获取评论总数
+    newComments(info.id, info.type == "single" ? 0 : 2, 1, 1, 3, 0).then(res => {
+      if (res.data.data) {
+        total.value = res.data.data.totalCount
+      }
+    })
     return {
-      router, info
+      router, info, total, formatCount
     }
   }
 }
@@ -62,6 +70,7 @@ nav {
   align-items: center;
   background-color: white;
   padding: 0.3rem 0.22rem 0.1rem 0.22rem;
+
   svg {
     width: 0.45rem;
     height: 0.45rem;

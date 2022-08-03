@@ -22,11 +22,11 @@
     </div>
 
     <!-- 单曲 -->
-    <div v-if="type == 'single && info'" class="single">
-      <img src="" alt="">
+    <div v-if="type == 'single' && info" class="single">
+      <img :src="info.coverImgUrl" alt="">
       <p>
-        <span>歌名</span>
-        <span> - 作者</span>
+        <span>{{ info.name }}</span>
+        <span> - {{ info.auname }}</span>
       </p>
     </div>
   </div>
@@ -100,13 +100,15 @@ export default {
 
 .single {
   img {
-    width: 0.9rem;
-    height: 0.9rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
   }
 
   p {
     flex: 1;
     font-size: 0.27rem;
+    margin-left: 0.1rem;
 
     span:last-child {
       color: #bfbfbf;

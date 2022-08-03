@@ -52,9 +52,10 @@
       </van-field>
     </div>
 
-    <van-popup v-model:show="showp" :style="{ height: '90%' }" round position="bottom">
-      <innerComments :loadInner="loadInner"></innerComments>
+    <van-popup v-if="showp" v-model:show="showp" :style="{ height: '90%' }" round position="bottom">
+      <innerComments :loadInner="loadInner" :id="id" :type="type"></innerComments>
     </van-popup>
+
   </div>
 </template>
 <script>
@@ -64,7 +65,7 @@ import { likeComment, comment, newComments } from '../../api/index.js'
 import innerComments from './innerComments.vue'
 export default {
   name: "commentList",
-  props: ["id"],
+  props: ["id", "type"],
   components: { innerComments },
   setup(props) {
     const clist = reactive({
@@ -77,10 +78,12 @@ export default {
     const loading = ref(true)
     const finished = ref(false)
     const total = ref(999)
+    console.log(props.type)
+    //目前只有歌单和单曲， 2是歌单，0是单曲
+    const type = props.type == "list" ? 2 : 0
     const getComments = function () {
       const cursor = clist.comments.length ? clist.comments[clist.comments.length - 1].time : 0
-      newComments(props.id, 2, pageNo, pageSize, sortType, cursor).then(res => {
-        console.log(res)
+      newComments(props.id, type, pageNo, pageSize, sortType, cursor).then(res => {
         total.value = res.data.data.totalCount
         clist.comments = clist.comments.concat(res.data.data.comments)
         loading.value = false
@@ -102,8 +105,7 @@ export default {
       dom.style.color = clist.comments[index].liked ? "#d81e06" : "#bfbfbf"
 
       //是否点赞
-      await likeComment(props.id, 2, clist.comments[index].commentId, clist.comments[index].liked ? 1 : 0)
-
+      await likeComment(props.id, type, clist.comments[index].commentId, clist.comments[index].liked ? 1 : 0)
     }
 
     //评论
@@ -115,10 +117,13 @@ export default {
       input.focus()
       cid = clist.comments[index].commentId
     }
-    const toComment = async function () {
-      await comment(props.id, pc.value, 1, 2, cid).catch(err => {
+    const toComment = function () {
+      comment(props.id, pc.value, 1, type, cid).then(res => {
+        vant.Toast.success('评论成功');
+        pc.value = ""
+      }).catch(err => {
         vant.Dialog.alert({
-          message: '由于vercel部署项目启用https协议，评论接口无法使用，请见谅~',
+          message: "未登录",
           theme: 'round-button',
         }).then(() => {
           // on close
@@ -160,7 +165,7 @@ export default {
       loadInner.value = !loadInner.value
     })
     return {
-      clist, onLoad, finished, loading, like, focus, toComment, changeSortType, pc, showp, showpop, loadInner
+      clist, onLoad, finished, loading, like, focus, toComment, changeSortType, pc, showp, showpop, loadInner, type
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="innerCommnets">
-    <div class="ttitle">回复({{clist.total}})</div>
+    <div class="ttitle">回复({{ clist.total }})</div>
     <div class="oc" v-if="clist.ownerCmt.user">
       <img :src="clist.ownerCmt.user.avatarUrl" alt="">
       <div class="innerbox">
@@ -9,7 +9,7 @@
             <span class="uname"> {{ clist.ownerCmt.user.nickname }}</span>
             <span class="ctime">{{ clist.ownerCmt.timeStr }}</span>
           </div>
-          <div class="good">
+          <div class="good1" @click="ilike(-1)">
             <span v-if="clist.ownerCmt.likedCount > 0">{{ clist.ownerCmt.likedCount }}</span>
             <svg v-if="!clist.ownerCmt.liked" t="1659443387348" class="icon" viewBox="0 0 1024 1024" version="1.1"
               xmlns="http://www.w3.org/2000/svg" p-id="11772" width="48" height="48">
@@ -35,8 +35,20 @@
     <div class="list">
       <div class="title">
         <span>全部回复</span>
+        <svg v-show="!sort" @click="sortType()" t="1659520322626" class="icon" viewBox="0 0 1024 1024" version="1.1"
+          xmlns="http://www.w3.org/2000/svg" p-id="7913" width="48" height="48">
+          <path
+            d="M64 224h426.667a32 32 0 0 0 0-64H64a32 32 0 0 0 0 64z m0 320h298.667a32 32 0 0 0 0-64H64a32 32 0 0 0 0 64z m426.667 256H64a32 32 0 0 0 0 64h426.667a32 32 0 0 0 0-64z m491.946-438.613L769.28 148.053a32 32 0 0 0-10.453-7.04 31.147 31.147 0 0 0-23.254 0 32 32 0 0 0-10.453 7.04L511.787 361.387a32 32 0 1 0 45.226 45.226l158.72-158.72v605.44a32 32 0 0 0 64 0v-605.44l158.72 158.72a32 32 0 0 0 45.227-45.226z"
+            p-id="7914" fill="#2c2c2c"></path>
+        </svg>
+        <svg v-show="sort" @click="sortType()" t="1659520391072" class="icon" viewBox="0 0 1024 1024" version="1.1"
+          xmlns="http://www.w3.org/2000/svg" p-id="8164" width="48" height="48">
+          <path
+            d="M64 224h426.667a32 32 0 0 0 0-64H64a32 32 0 0 0 0 64z m0 320h298.667a32 32 0 0 0 0-64H64a32 32 0 0 0 0 64z m426.667 256H64a32 32 0 0 0 0 64h426.667a32 32 0 0 0 0-64z m491.946-182.613a32 32 0 0 0-45.226 0l-158.72 158.72v-605.44a32 32 0 0 0-64 0v605.44l-158.72-158.72a32 32 0 0 0-45.227 45.226l213.333 213.334a32 32 0 0 0 10.454 7.04 31.147 31.147 0 0 0 23.253 0 32 32 0 0 0 10.453-7.04l213.334-213.334a32 32 0 0 0 1.066-45.226z"
+            p-id="8165" fill="#2c2c2c"></path>
+        </svg>
       </div>
-      <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了">
+      <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <van-cell v-for="(c, index) in clist.comments" :key="c.commentId" @click="ifocus(index)">
           <div class="box">
             <img :src="c.user.avatarUrl" alt="">
@@ -46,7 +58,7 @@
                   <span class="uname">{{ c.user.nickname }}</span>
                   <span class="ctime">{{ c.timeStr }}</span>
                 </div>
-                <div class="good" @click="ilike(index)">
+                <div class="good2" @click="ilike(index)">
                   <span v-if="c.likedCount > 0">{{ c.likedCount }}</span>
                   <svg v-if="!c.liked" t="1659443387348" class="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="11772" width="48" height="48">
@@ -88,7 +100,7 @@ import { watch, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 export default {
   name: "innerComments",
-  props: ["loadInner"],
+  props: ["loadInner", "id", "type"],
   setup(props) {
     const clist = reactive({
       ownerCmt: {},
@@ -97,40 +109,57 @@ export default {
     })
     const loading = ref(true)
     const finished = ref(false)
+    //0是正序 1是逆序
+    const sort = ref(0)
     // 加载全部回复
     const loadInnerComment = function (cid, sid) {
-      floorComments(cid, sid, 2).then(res => {
+      let time = 0
+      if (clist.comments.length) {
+        time = sort.value ? clist.comments[0].time : clist.comments[clist.comments.length - 1].time
+      }
+      floorComments(cid, sid, props.type, 30, time).then(res => {
         if (res.data.data) {
           const d = res.data.data
-          console.log(d)
-          clist.ownerCmt = d.ownerComment
-          clist.comments = d.comments
-          clist.total = d.totalCount
+          clist.ownerCmt = Object.assign(clist.ownerCmt, d.ownerComment)
+          clist.comments = clist.comments.concat(d.comments)
+          clist.total = clist.total > 0 ? clist.total : d.totalCount
+          if (!d.hasMore) {
+            finished.value = true
+          }
+          loading.value = false
         }
-        loading.value = false
-        finished.value = true
+        else {
+          loading.value = false
+          finished.value = true
+        }
       })
     }
+
     const route = useRoute()
-    watch(props, val => {
-      if (val.loadInner) {
-        loadInnerComment(route.query.cid.value, route.query.sid.value)
-      }
-      else {
-        clist.comments = []
-        clist.ownerCmt = {}
-      }
-    }, { immediate: true })
+    const onLoad = function () {
+      loadInnerComment(route.query.cid.value, route.query.sid.value)
+    }
 
     //点赞
     const ilike = async function (index) {
-      clist.comments[index].liked = !clist.comments[index].liked
-      clist.comments[index].likedCount += clist.comments[index].liked ? 1 : -1
-      const dom = document.getElementsByClassName("good")[index]
-      dom.style.color = clist.comments[index].liked ? "#d81e06" : "#bfbfbf"
+      if (index >= 0) {
+        clist.comments[index].liked = !clist.comments[index].liked
+        clist.comments[index].likedCount += clist.comments[index].liked ? 1 : -1
+        const dom = document.getElementsByClassName("good2")[index]
+        dom.style.color = clist.comments[index].liked ? "#d81e06" : "#bfbfbf"
 
-      //是否点赞
-      await likeComment(props.id, 2, clist.comments[index].commentId, clist.comments[index].liked ? 1 : 0)
+        //是否点赞
+        await likeComment(props.id, props.type, clist.comments[index].commentId, clist.comments[index].liked ? 1 : 0)
+      }
+      else {
+        clist.ownerCmt.liked = !clist.ownerCmt.liked
+        clist.ownerCmt.likedCount += clist.ownerCmt.liked ? 1 : -1
+        const dom = document.getElementsByClassName("good1")[0]
+        dom.style.color = clist.ownerCmt.liked ? "#d81e06" : "#bfbfbf"
+
+        //是否点赞
+        await likeComment(props.id, props.type, clist.ownerCmt.commentId, clist.ownerCmt.liked ? 1 : 0)
+      }
 
     }
 
@@ -145,9 +174,12 @@ export default {
     }
     //评论
     const itoComment = async function () {
-      await comment(props.id, pc.value, 1, 2, cid).catch(err => {
+      await comment(props.id, pc.value, 1, props.type, cid).then(res => {
+        vant.Toast.success('评论成功');
+        pc.value = ""
+      }).catch(err => {
         vant.Dialog.alert({
-          message: '由于vercel部署项目启用https协议，评论接口无法使用，请见谅~',
+          message: "未登录",
           theme: 'round-button',
         }).then(() => {
           // on close
@@ -155,11 +187,25 @@ export default {
       })
     }
 
-    //todo
-    //按时间排序、原评论点赞、楼中楼
+    // 按时间排序
+
+    const sortType = function () {
+      sort.value ^= 1
+      if(sort.value == 0){
+        clist.comments.sort((a, b) => {
+          return a.time - b.time
+        })
+      }
+      else{
+        clist.comments.sort((a, b) => {
+          return b.time - a.time
+        })
+      }
+      
+    }
 
     return {
-      clist, loading, finished, ilike, ifocus, itoComment, ipc
+      clist, loading, finished, ilike, ifocus, itoComment, ipc, sortType, sort, onLoad
     }
   }
 }
@@ -181,7 +227,7 @@ export default {
   display: flex;
   justify-content: space-between;
   background-color: white;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   padding: 0 0.22rem;
 
   img {
@@ -218,7 +264,7 @@ export default {
         }
       }
 
-      .good {
+      .good1 {
         align-self: flex-end;
         color: #bfbfbf;
 
@@ -263,9 +309,16 @@ export default {
     top: 0;
     left: 0;
     z-index: 5;
+    margin-bottom: 5px;
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    svg {
+      width: 0.35rem;
+      height: 0.35rem;
+    }
   }
 
   .van-list {
@@ -311,7 +364,7 @@ export default {
               }
             }
 
-            .good {
+            .good2 {
               align-self: flex-end;
               color: #bfbfbf;
 

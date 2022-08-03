@@ -145,9 +145,9 @@ export default {
     const route = useRoute()
     let commentInfo = null
     watch(props.topInfo, (newVal) => {
-      commentInfo = toRaw(newVal)
-      commentInfo.data.type = "list"
-      commentInfo.data.id = route.query.id
+      commentInfo = toRaw(newVal.data)
+      commentInfo.type = "list"
+      commentInfo.id = route.query.id
     })
     
 

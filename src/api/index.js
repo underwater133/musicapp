@@ -246,7 +246,7 @@ export function playlistComments(id, limit = 20, offset = 0) {
 // 5: 视频
 // 6: 动态
 export function likeComment(id, type, cid, t) {
-  return request.get(`/comment/like?id=${id}&type=${type}&cid=${cid}&t=${t}&cookie=` + localStorage.cookie)
+  return request.get(`/comment/like?id=${id}&type=${type}&cid=${cid}&t=${t}&cookie=` + localStorage.cookie )
 }
 
 
@@ -264,7 +264,7 @@ export function likeComment(id, type, cid, t) {
 // content :要发送的内容
 // commentId :回复的评论 id (回复评论时必填)
 export function comment(id, content, t, type, commentId) {
-  return request.get(`/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}`)
+  return request.get(`/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}&cookie=` + localStorage.cookie)
 }
 
 
@@ -307,6 +307,6 @@ export function newComments(id, type, pageNo, pageSize, sortType, cursor) {
 // time: 分页参数, 取上一页最后一项的 time 获取下一页数据
 // 接口地址: /comment/floor
 // 调用例子: /comment/floor ? parentCommentId = 1438569889 & id=29764564 & type=0
-export function floorComments(parentCommentId, id, type){
-  return request.get(`/comment/floor?parentCommentId=${parentCommentId}&id=${id}&type=${type}`)
+export function floorComments(parentCommentId, id, type, limit, time){
+  return request.get(`/comment/floor?parentCommentId=${parentCommentId}&id=${id}&type=${type}&limit=${limit}&time=${time}`)
 }
