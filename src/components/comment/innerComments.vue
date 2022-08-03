@@ -77,6 +77,10 @@
               <div class="content">
                 {{ c.content }}
               </div>
+              <div class="floor" v-if="c.beReplied">
+                <span>@{{c.beReplied[0].user.nickname}}</span>
+                <span>: {{c.beReplied[0].content}}</span>
+              </div>
 
             </div>
           </div>
@@ -188,21 +192,22 @@ export default {
     }
 
     // 按时间排序
-
     const sortType = function () {
       sort.value ^= 1
-      if(sort.value == 0){
+      if (sort.value == 0) {
         clist.comments.sort((a, b) => {
           return a.time - b.time
         })
       }
-      else{
+      else {
         clist.comments.sort((a, b) => {
           return b.time - a.time
         })
       }
-      
+
     }
+
+    // todo->楼中楼
 
     return {
       clist, loading, finished, ilike, ifocus, itoComment, ipc, sortType, sort, onLoad
@@ -384,6 +389,18 @@ export default {
           .content {
             margin-top: 8px;
             font-size: 0.27rem;
+          }
+
+          .floor{
+            font-size: 0.27rem;
+            color: #bfbfbf;
+            span:first-child{
+              color: rgb(47, 93, 177);
+            }
+          }
+          .floor::before{
+            content: "|";
+            color: #bfbfbf;
           }
         }
       }

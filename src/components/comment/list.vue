@@ -78,7 +78,6 @@ export default {
     const loading = ref(true)
     const finished = ref(false)
     const total = ref(999)
-    console.log(props.type)
     //目前只有歌单和单曲， 2是歌单，0是单曲
     const type = props.type == "list" ? 2 : 0
     const getComments = function () {
