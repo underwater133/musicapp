@@ -88,7 +88,7 @@
       </van-list>
 
       <div class="commentWrap">
-        <van-field class="comment" v-model="ipc" center clearable placeholder="听说爱评论的人粉丝多">
+        <van-field class="icomment" v-model="ipc" center clearable placeholder="听说爱评论的人粉丝多">
           <template #button>
             <van-button size="small" type="primary" @click="itoComment()">评论</van-button>
           </template>
@@ -172,15 +172,15 @@ export default {
     let cid = undefined
     //获取焦点
     const ifocus = function (index) {
-      const input = document.getElementsByClassName("comment")[0].getElementsByTagName("input")[0]
+      const input = document.getElementsByClassName("icomment")[0].getElementsByTagName("input")[0]
       input.focus()
       cid = clist.comments[index].commentId
     }
     //评论
     const itoComment = async function () {
-      await comment(props.id, pc.value, 1, props.type, cid).then(res => {
+      await comment(props.id, ipc.value, 2, props.type, cid).then(res => {
         vant.Toast.success('评论成功');
-        pc.value = ""
+        ipc.value = ""
       }).catch(err => {
         vant.Dialog.alert({
           message: "未登录",
@@ -410,7 +410,7 @@ export default {
   .commentWrap {
     height: 1rem;
 
-    .comment {
+    .icomment {
       position: fixed;
       bottom: 0;
       left: 0;
