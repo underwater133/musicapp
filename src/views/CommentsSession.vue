@@ -47,9 +47,13 @@ export default {
 
 <style lang="less" scoped>
 .comment {
-  background-color: #f0f0f0;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  background-color: #f0f0f0;
+  z-index: 10;
 }
 
 nav {
