@@ -41,7 +41,9 @@
       <!-- 浏览歌词 -->
       <div class="playLyric" v-show="showLyric" @click="showLyric = !showLyric">
         <div class="scroll-lrc">
-          <p :class="{ active: getLyricState(item.time, item.nextTime) }" v-for="(item, i) in lyric" :key="i">{{ item.lrc }}
+          <p :class="{ active: getLyricState(item.time, item.nextTime) }" v-for="(item, i) in lyric" :key="i">{{
+              item.lrc
+          }}
           </p>
         </div>
       </div>
@@ -85,15 +87,19 @@
             d="M512.3 978.7c-63 0-124.1-12.3-181.6-36.7-55.5-23.5-105.4-57.1-148.3-100-42.8-42.8-76.5-92.7-100-148.3-24.3-57.5-36.7-118.6-36.7-181.6S58 388 82.4 330.5c23.5-55.5 57.1-105.4 100-148.3s92.7-76.5 148.3-100c57.5-24.3 118.6-36.7 181.6-36.7s124.1 12.3 181.6 36.7c55.5 23.5 105.4 57.1 148.3 100 42.8 42.8 76.5 92.7 100 148.3 24.3 57.5 36.7 118.6 36.7 181.6s-12.3 124.1-36.7 181.6c-23.5 55.5-57.1 105.4-100 148.3-42.8 42.8-92.7 76.5-148.3 100-57.6 24.4-118.7 36.7-181.6 36.7z m0-896.2c-236.9 0-429.7 192.8-429.7 429.7s192.8 429.7 429.7 429.7c236.9 0 429.7-192.8 429.7-429.7S749.2 82.5 512.3 82.5z"
             fill="#eeedec" p-id="55225"></path>
         </svg>
-        <svg @click="toComment()" t="1647155203078" class="icon" viewBox="0 0 1024 1024" version="1.1"
-          xmlns="http://www.w3.org/2000/svg" p-id="55765" width="48" height="48">
-          <path
-            d="M514.57 959.33H152.86l0.09-180.67C95.16 701.06 64.67 609.1 64.67 512 64.67 265.34 265.34 64.67 512 64.67S959.33 265.34 959.33 512c0 235.23-183.66 429.49-415.12 446.13v1.14l-29.64 0.06z m-302.4-59.3l302.21-0.06C727.03 898.68 900.03 724.65 900.03 512c0-213.96-174.07-388.03-388.03-388.03-213.96 0-388.04 174.07-388.04 388.03 0 87.21 28.36 169.66 82.01 238.42l6.28 8.05-0.08 141.56z"
-            p-id="55766" fill="#eeedec"></path>
-          <path
-            d="M663.46 477.27h-310.1c-16.37 0-29.65-13.28-29.65-29.65 0-16.37 13.28-29.65 29.65-29.65h310.1c16.37 0 29.65 13.28 29.65 29.65 0 16.37-13.27 29.65-29.65 29.65zM538.74 636.8H353.37c-16.37 0-29.65-13.28-29.65-29.65S337 577.5 353.37 577.5h185.37c16.37 0 29.65 13.28 29.65 29.65s-13.28 29.65-29.65 29.65z"
-            p-id="55767" fill="#eeedec"></path>
-        </svg>
+        <div style="position: relative;">
+          <svg @click="toComment()" t="1647155203078" class="icon" viewBox="0 0 1024 1024" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" p-id="55765" width="48" height="48">
+            <path
+              d="M514.57 959.33H152.86l0.09-180.67C95.16 701.06 64.67 609.1 64.67 512 64.67 265.34 265.34 64.67 512 64.67S959.33 265.34 959.33 512c0 235.23-183.66 429.49-415.12 446.13v1.14l-29.64 0.06z m-302.4-59.3l302.21-0.06C727.03 898.68 900.03 724.65 900.03 512c0-213.96-174.07-388.03-388.03-388.03-213.96 0-388.04 174.07-388.04 388.03 0 87.21 28.36 169.66 82.01 238.42l6.28 8.05-0.08 141.56z"
+              p-id="55766" fill="#eeedec"></path>
+            <path
+              d="M663.46 477.27h-310.1c-16.37 0-29.65-13.28-29.65-29.65 0-16.37 13.28-29.65 29.65-29.65h310.1c16.37 0 29.65 13.28 29.65 29.65 0 16.37-13.27 29.65-29.65 29.65zM538.74 636.8H353.37c-16.37 0-29.65-13.28-29.65-29.65S337 577.5 353.37 577.5h185.37c16.37 0 29.65 13.28 29.65 29.65s-13.28 29.65-29.65 29.65z"
+              p-id="55767" fill="#eeedec"></path>
+          </svg>
+          <span class="comment">{{ formatCommentCount(totalComments) }}</span>
+        </div>
+
         <svg t="1647855304177" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
           p-id="9269" width="48" height="48">
           <path
@@ -199,6 +205,7 @@ import store from '../store/index'
 import { ref, computed, reactive, watch, inject, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import popPlaylist from './common/popPlaylist.vue'
+import { newComments } from '../api/index'
 export default {
   name: 'playMusicDetail',
   components: { popPlaylist },
@@ -226,7 +233,7 @@ export default {
     let proWidth = ref("0%")
     let strDuration = ref('00:00')
 
-
+    const totalComments = ref(0)
     watch(playSong, () => {
       setTimeout(() => {
         try {
@@ -239,6 +246,12 @@ export default {
           console.log(e)
         }
       }, 500)
+      // 获取歌曲评论数
+      newComments(playlist.value[playIndex.value].id, 0, 1, 1, 3, 0).then(res => {
+        if (res.data.data) {
+          totalComments.value = res.data.data.totalCount
+        }
+      })
     }, { immediate: true })
 
     //切换唱片是否旋转
@@ -296,7 +309,6 @@ export default {
           audio.value.pause() // 触摸拖动时停止播放
         }
       })
-
     })
     onBeforeUnmount(() => {
       clearInterval(timer)
@@ -328,15 +340,16 @@ export default {
 
     const showpopList = ref(false);
 
+    //跳转到评论区
     const router = useRouter()
     const toComment = function () {
-      // console.log(playlist.value[playIndex.value])
+      if (!playlist.value.length) return
       const commentInfo = {
         type: "single",
         id: playlist.value[playIndex.value].id,
         coverImgUrl: playlist.value[playIndex.value].al.picUrl,
         auname: playlist.value[playIndex.value].arts,
-        name:playlist.value[playIndex.value].name
+        name: playlist.value[playIndex.value].name
       }
       router.push({
         name: "comments",
@@ -345,10 +358,17 @@ export default {
         }
       })
     }
+
+    function formatCommentCount(count) {
+      if (count >= 100000) return "10w+"
+      else if (count >= 10000) return "1w+"
+      else if (count > 1000) return "999+"
+      else return count
+    }
     return {
       playIndex, playlist, isPlaying, needle, AnimationPlayState, currentTime,
       strDuration, strCurrentTime, lyric, showLyric, getLyricState, proWidth,
-      showpopList, toComment
+      showpopList, toComment, totalComments, formatCommentCount
     }
   }
 }
@@ -514,6 +534,16 @@ export default {
         width: 0.5rem;
         height: 0.5rem;
       }
+
+      .comment {
+        position: absolute;
+        bottom: 0;
+        right: 0px;
+        transform: translateX(65%);
+        font-size: 0.13rem;
+        color: white;
+        z-index: 1;
+      }
     }
 
     .playProgress {
@@ -566,6 +596,8 @@ export default {
   }
 
 }
+
+
 
 @keyframes disc_roate {
   from {
