@@ -17,13 +17,8 @@ export default {
 
 <style lang="less" scoped>
 .dailysongs{
-  // position: absolute;
-  // top: 0;
-  // left: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('../assets/img/dailysongs_bg.jpg');
-  background-size: 100% 100%;
   overflow: scroll;
 }
 </style>
