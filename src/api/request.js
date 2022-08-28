@@ -2,7 +2,7 @@ import axios from 'axios'
 
 //创建实例
 const instance = axios.create({
-  baseURL:"http://120.25.198.16:3000",
+  baseURL:"https://music.cyrilstudio.top/",
   timeout: 15000
 })
 
