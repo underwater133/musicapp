@@ -2,7 +2,7 @@ import axios from 'axios'
 
 //创建实例
 const instance = axios.create({
-  baseURL:"https://netease-cloud-music-api-five-topaz-52.vercel.app",
+  baseURL:"http://120.25.198.16:3000",
   timeout: 15000
 })
 
